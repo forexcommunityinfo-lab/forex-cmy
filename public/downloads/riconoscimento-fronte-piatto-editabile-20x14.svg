@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200mm"
+     height="140mm"
+     viewBox="0 0 2362 1654">
+  <title>Riconoscimento Annuale Forex_CMY — fronte piatto editabile</title>
+  <desc>File grafico frontale per produzione, senza mockup. Inserire il nome nel livello recipient-name.</desc>
+
+  <!-- Fronte piatto completo: logo, firma e testi già inclusi -->
+  <image id="flat-production-artwork"
+         x="0" y="0"
+         width="2362" height="1654"
+         preserveAspectRatio="none"
+         xlink:href="riconoscimento-fronte-piatto-20x14-300dpi.png"/>
+
+  <!--
+    CAMPO NOME EDITABILE
+    Selezionare il livello recipient-name e inserire il nome.
+    Il campo è volutamente vuoto nel file consegnato.
+  -->
+  <text id="recipient-name"
+        x="175" y="790"
+        fill="#d3a443"
+        font-family="Oswald, Impact, Arial Narrow, sans-serif"
+        font-size="165"
+        font-weight="600"
+        letter-spacing="2"></text>
+</svg>

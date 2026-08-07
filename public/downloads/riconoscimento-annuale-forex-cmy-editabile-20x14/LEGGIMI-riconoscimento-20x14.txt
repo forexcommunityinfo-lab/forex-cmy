@@ -1,0 +1,30 @@
+RICONOSCIMENTO ANNUALE FOREX_CMY — FILE EDITABILE
+
+Formato finito consigliato:
+- 200 × 140 mm, orizzontale
+- rapporto 10:7
+- acrilico trasparente consigliato: 20 mm
+
+Aprire “riconoscimento-annuale-editabile-20x14.svg” con Figma,
+Adobe Illustrator o Inkscape.
+
+Campi modificabili:
+- RICONOSCIMENTO ANNUALE
+- IL TUO NOME
+- GG/MM/AAAA
+- descrizione
+- Fondatore Forex_CMY
+
+Tenere nella stessa cartella:
+- riconoscimento-logo.png
+- riconoscimento-firma.png
+
+Prima della produzione chiedere al fornitore:
+- abbondanza richiesta;
+- profilo colore RGB o CMYK;
+- stampa diretta UV oppure inserto stampato;
+- eventuale conversione dei font in tracciati.
+
+Font consigliati:
+- Oswald per titolo e nome;
+- Montserrat per testi secondari.

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="1054" height="1492" viewBox="0 0 1054 1492">
+  <title>Premio Annuale Forex_CMY — modello editabile</title>
+  <desc>Modifica i testi con id recipient-name e award-date.</desc>
+
+  <!-- Livello grafico di base -->
+  <image id="certificate-background"
+         width="1054" height="1492"
+         xlink:href="premio-annuale-base-editabile.png" />
+
+  <!-- CAMPO EDITABILE: nome del destinatario -->
+  <text id="recipient-name"
+        x="95" y="940"
+        fill="#d7aa4b"
+        font-family="Oswald, Impact, Arial Narrow, sans-serif"
+        font-size="86"
+        font-weight="600"
+        letter-spacing="1">
+    NOME DESTINATARIO
+  </text>
+
+  <!-- CAMPO EDITABILE: data -->
+  <text id="award-date"
+        x="248" y="1310"
+        text-anchor="middle"
+        fill="#f2eee7"
+        font-family="Montserrat, Arial, sans-serif"
+        font-size="30"
+        font-weight="500"
+        letter-spacing="2">
+    GG/MM/AAAA
+  </text>
+</svg>

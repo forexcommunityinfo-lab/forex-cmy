@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200mm"
+     height="143.1mm"
+     viewBox="0 0 1483 1061">
+  <title>Riconoscimento Forex_CMY come nel sito — nome editabile</title>
+  <desc>La grafica, il logo e la firma sono nella base. Inserire il nome nel livello recipient-name.</desc>
+
+  <!-- Grafica identica al sito, completa di logo e firma -->
+  <image id="website-award-base"
+         x="0" y="0"
+         width="1483" height="1061"
+         xlink:href="riconoscimento-come-sito-senza-nome.png"/>
+
+  <!--
+    LIVELLO EDITABILE DEL NOME
+    Inserire il nome tra i tag text, per esempio:
+    >MARIO ROSSI</text>
+  -->
+  <text id="recipient-name"
+        x="640" y="520"
+        text-anchor="middle"
+        fill="#d2a33b"
+        font-family="Oswald, Impact, Arial Narrow, sans-serif"
+        font-size="92"
+        font-weight="600"
+        letter-spacing="1"></text>
+</svg>

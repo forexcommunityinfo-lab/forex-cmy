@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="200mm"
+     height="140mm"
+     viewBox="0 0 2000 1400">
+  <title>Riconoscimento Annuale Forex_CMY — 20 × 14 cm</title>
+  <desc>File di produzione editabile. I testi restano modificabili.</desc>
+
+  <defs>
+    <pattern id="background-lines" width="120" height="120" patternUnits="userSpaceOnUse">
+      <circle cx="0" cy="0" r="94" fill="none" stroke="#2c2c2c" stroke-width="1.2" opacity="0.32"/>
+      <circle cx="0" cy="0" r="72" fill="none" stroke="#292929" stroke-width="1" opacity="0.26"/>
+    </pattern>
+    <clipPath id="signature-clip">
+      <rect x="0" y="0" width="360" height="176"/>
+    </clipPath>
+  </defs>
+
+  <!-- Sfondo e area di sicurezza -->
+  <rect id="background" width="2000" height="1400" fill="#111313"/>
+  <rect width="2000" height="1400" fill="url(#background-lines)"/>
+  <rect x="40" y="40" width="1920" height="1320" rx="8"
+        fill="none" stroke="#d3a443" stroke-width="3" opacity="0.55"/>
+
+  <!-- Titolo editabile -->
+  <g id="title">
+    <text x="150" y="210"
+          fill="#f1eee7"
+          font-family="Oswald, Impact, Arial Narrow, sans-serif"
+          font-size="112"
+          font-weight="600"
+          letter-spacing="1">RICONOSCIMENTO ANNUALE</text>
+    <text x="150" y="330"
+          fill="#f1eee7"
+          font-family="Oswald, Impact, Arial Narrow, sans-serif"
+          font-size="104"
+          font-weight="600"
+          letter-spacing="1">FOREX_CMY</text>
+  </g>
+
+  <!-- Logo -->
+  <image id="brand-logo"
+         x="1450" y="70" width="400" height="400"
+         xlink:href="riconoscimento-logo.png"/>
+
+  <!-- Destinatario editabile -->
+  <text x="150" y="490"
+        fill="#f1eee7"
+        font-family="Montserrat, Arial, sans-serif"
+        font-size="43"
+        font-weight="500">Orgogliosamente conferito a:</text>
+  <text id="recipient-name"
+        x="150" y="690"
+        fill="#d3a443"
+        font-family="Oswald, Impact, Arial Narrow, sans-serif"
+        font-size="152"
+        font-weight="600"
+        letter-spacing="2">IL TUO NOME</text>
+
+  <!-- Descrizione editabile -->
+  <g id="description"
+     fill="#f1eee7"
+     font-family="Montserrat, Arial, sans-serif"
+     font-size="40"
+     font-weight="400">
+    <text x="150" y="825">Questo riconoscimento viene conferito dopo almeno 12 mesi</text>
+    <text x="150" y="880">di attività e a seguito della verifica manuale dello storico</text>
+    <text x="150" y="935">e dei requisiti previsti. Premia continuità, disciplina e un</text>
+    <text x="150" y="990">approccio consapevole ai mercati.</text>
+  </g>
+
+  <!-- Data editabile -->
+  <g id="date-field">
+    <text id="award-date"
+          x="395" y="1165"
+          text-anchor="middle"
+          fill="#f1eee7"
+          font-family="Montserrat, Arial, sans-serif"
+          font-size="44"
+          font-weight="500"
+          letter-spacing="3">GG/MM/AAAA</text>
+    <line x1="150" y1="1195" x2="640" y2="1195"
+          stroke="#d3a443" stroke-width="4"/>
+    <text x="395" y="1260"
+          text-anchor="middle"
+          fill="#f1eee7"
+          font-family="Montserrat, Arial, sans-serif"
+          font-size="36">Data</text>
+  </g>
+
+  <!-- Firma -->
+  <g id="signature">
+    <image x="1300" y="1000" width="430" height="251"
+           clip-path="url(#signature-clip)"
+           xlink:href="riconoscimento-firma.png"/>
+    <line x1="1240" y1="1195" x2="1825" y2="1195"
+          stroke="#d3a443" stroke-width="4"/>
+    <text x="1532" y="1260"
+          text-anchor="middle"
+          fill="#d3a443"
+          font-family="Montserrat, Arial, sans-serif"
+          font-size="38"
+          font-weight="500">Fondatore Forex_CMY</text>
+  </g>
+</svg>

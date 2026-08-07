@@ -1,0 +1,19 @@
+RICONOSCIMENTO FOREX_CMY — VERSIONE IDENTICA AL SITO
+
+Il file SVG utilizza come base:
+“riconoscimento-come-sito-senza-nome.png”
+
+Logo e firma sono già inclusi nella grafica di base e risultano sempre visibili.
+La scritta “IL TUO NOME” è stata eliminata.
+
+Per inserire un nome:
+1. Aprire “riconoscimento-come-sito-editabile.svg” con Figma,
+   Adobe Illustrator o Inkscape.
+2. Selezionare il livello “recipient-name”.
+3. Inserire il nome desiderato.
+
+Dimensione impostata:
+- larghezza: 200 mm
+- altezza proporzionale: 143,1 mm
+
+Conservare SVG e PNG nella stessa cartella.

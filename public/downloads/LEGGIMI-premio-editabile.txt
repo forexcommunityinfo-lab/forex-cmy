@@ -1,0 +1,12 @@
+PREMIO ANNUALE FOREX_CMY — FILE EDITABILE
+
+Apri “premio-annuale-editabile.svg” con Figma, Adobe Illustrator o Inkscape.
+
+I due campi modificabili sono:
+- NOME DESTINATARIO
+- GG/MM/AAAA
+
+La firma e la dicitura “Fondatore Forex_CMY” fanno parte della grafica approvata.
+Per mantenere la grafica visibile, conserva il file SVG e il PNG di base nella stessa cartella.
+
+Una volta inseriti nome e data, esporta il certificato in PDF o PNG dal programma utilizzato.

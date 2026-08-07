@@ -1,0 +1,24 @@
+RICONOSCIMENTO ANNUALE FOREX_CMY — FRONTE PIATTO
+
+Questo è il file grafico da inviare al produttore.
+Non è un mockup: non contiene acrilico, prospettiva, parete o tavolo.
+
+Formato:
+- 200 × 140 mm
+- orizzontale
+- PNG: 2362 × 1654 px, equivalente a circa 300 dpi
+
+Nel file sono presenti:
+- logo Forex_CMY;
+- firma;
+- Fondatore Forex_CMY;
+- titolo, descrizione e data;
+- spazio del destinatario vuoto.
+
+Per aggiungere il nome:
+1. Aprire “riconoscimento-fronte-piatto-editabile-20x14.svg”
+   con Figma, Illustrator o Inkscape.
+2. Selezionare il livello “recipient-name”.
+3. Inserire il nome.
+
+Conservare SVG e PNG nella stessa cartella.
