@@ -11,6 +11,7 @@ const ContactForm = ({ isOpen, onClose }) => {
     email: '',
     subject: '',
     message: '',
+    consent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -25,6 +26,16 @@ const ContactForm = ({ isOpen, onClose }) => {
     e.preventDefault();
     setIsSubmitting(true);
 
+    if (!formData.consent) {
+      toast({
+        title: 'Conferma richiesta',
+        description: 'Per continuare, conferma di aver letto l’informativa sulla privacy.',
+        variant: 'destructive',
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const result = await submitContactForm(formData);
       if (result.success) {
@@ -32,7 +43,7 @@ const ContactForm = ({ isOpen, onClose }) => {
           title: 'Messaggio inviato',
           description: result.message,
         });
-        setFormData({ name: '', email: '', subject: '', message: '' });
+        setFormData({ name: '', email: '', subject: '', message: '', consent: false });
         setTimeout(() => onClose(), 1500);
       }
     } catch (error) {
@@ -140,6 +151,22 @@ const ContactForm = ({ isOpen, onClose }) => {
               placeholder="Scrivi qui la tua richiesta..."
             />
           </div>
+
+          <label className="flex items-start gap-3 cursor-pointer">
+            <input
+              type="checkbox"
+              name="consent"
+              checked={formData.consent}
+              onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
+              className="mt-1 w-5 h-5 text-[#D4AF37] border-[#2A2A2A]/20 rounded focus:ring-[#D4AF37]"
+            />
+            <span className="text-sm text-[#2A2A2A]/60">
+              Chiedo di essere ricontattato e dichiaro di aver letto l’{' '}
+              <a href="/informativa-privacy" className="text-[#D4AF37] underline hover:text-[#B8942F]">
+                informativa sulla privacy
+              </a>.
+            </span>
+          </label>
 
           <button
             type="submit"

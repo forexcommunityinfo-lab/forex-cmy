@@ -153,7 +153,10 @@ const FreeEbook = () => {
                   className="mt-1 w-5 h-5 text-[#D4AF37] border-[#2A2A2A]/20 rounded focus:ring-[#D4AF37]"
                 />
                 <span className="text-sm text-[#2A2A2A]/60">
-                  Acconsento a ricevere l’eBook gratuito e aggiornamenti occasionali. Posso annullare l’iscrizione in qualsiasi momento.
+                  Acconsento a ricevere l’eBook gratuito e aggiornamenti occasionali, secondo l’{' '}
+                  <a href="/informativa-privacy" className="text-[#D4AF37] underline hover:text-[#B8942F]">
+                    informativa sulla privacy
+                  </a>. Posso revocare il consenso in qualsiasi momento.
                 </span>
               </label>
 

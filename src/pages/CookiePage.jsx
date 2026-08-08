@@ -1,12 +1,13 @@
 import React from 'react';
 import LegalPage from './LegalPage';
+import { setConsent } from '../lib/analytics';
 
 const CookiePage = () => (
   <LegalPage
     eyebrow="Legale"
     title="Informativa sui cookie"
     subtitle="Come vengono utilizzati i cookie e le tecnologie simili sul sito Forex_CMY."
-    lastUpdated="[DATA ULTIMO AGGIORNAMENTO]"
+    lastUpdated="8 agosto 2026"
     sections={[
       {
         title: 'Che cosa sono i cookie',
@@ -16,27 +17,27 @@ const CookiePage = () => (
       {
         title: 'Cookie tecnici',
         body:
-          'Il sito utilizza cookie tecnici necessari al proprio funzionamento e alla corretta navigazione. Tali cookie non richiedono consenso preventivo, in quanto strettamente indispensabili per la fornitura del servizio richiesto dall\'utente.',
+          'Il sito utilizza tecnologie tecniche necessarie al proprio funzionamento. Nel browser viene inoltre salvata la scelta effettuata nel banner, con la chiave forexcmy_cookie_consent, per ricordare se gli strumenti analitici sono stati accettati o rifiutati. Queste tecnologie non richiedono consenso preventivo quando sono strettamente necessarie.',
       },
       {
         title: 'Cookie di preferenza',
         body:
-          'I cookie di preferenza permettono al sito di ricordare scelte effettuate dall\'utente, come ad esempio la lingua o alcune impostazioni personali. Anche questi cookie hanno finalità funzionali.',
+          'Il sito può utilizzare la memoria locale del browser per conservare preferenze tecniche e, nella configurazione dimostrativa, i dati inseriti nei moduli. Tali informazioni restano sul dispositivo e possono essere eliminate dalle impostazioni del browser.',
       },
       {
         title: 'Cookie analitici',
         body:
-          'Al momento non risultano attivi servizi di analisi statistica sul sito. Qualora venissero introdotti in futuro strumenti analitici (ad esempio per misurare il numero di visite o il comportamento aggregato degli utenti), la presente informativa verrà aggiornata di conseguenza e verrà richiesto il consenso ove necessario.',
+          'Il sito è predisposto per utilizzare PostHog allo scopo di misurare visite e interazioni. PostHog viene inizializzato soltanto se è configurata una chiave valida e dopo che l\'utente ha selezionato “Accetta” nel banner. In caso di rifiuto, il tracciamento analitico resta disattivato.',
       },
       {
         title: 'Cookie di terze parti',
         body:
-          'Alcune sezioni del sito possono includere contenuti forniti da servizi esterni (ad esempio video incorporati, widget di Myfxbook, link a piattaforme social). Tali servizi possono utilizzare propri cookie, sui quali Forex_CMY non ha controllo diretto. Per maggiori informazioni si invita l\'utente a consultare le rispettive informative privacy.',
+          'Il sito contiene link verso servizi esterni, tra cui Myfxbook e Instagram. Il semplice collegamento non installa cookie di tali soggetti; quando l\'utente apre il sito esterno si applicano le informative e le tecnologie di quel fornitore.',
       },
       {
         title: 'Video incorporati',
         body:
-          'Eventuali video incorporati sul sito (ad esempio da piattaforme come YouTube o Vimeo) possono impostare cookie tecnici e di terze parti al momento della loro visualizzazione. Tali cookie sono gestiti direttamente dai fornitori di quei servizi.',
+          'Il video di presentazione è ospitato direttamente sul sito e riprodotto tramite il lettore HTML5 del browser. Non è incorporato da YouTube o Vimeo e la sua riproduzione non comporta, di per sé, l\'installazione di cookie di tali piattaforme.',
       },
       {
         title: 'Link ai social media',
@@ -60,13 +61,24 @@ const CookiePage = () => (
       },
       {
         title: 'Revoca del consenso',
-        body:
-          'Qualora vengano introdotti servizi che richiedono consenso, l\'utente potrà revocarlo in qualsiasi momento modificando le proprie preferenze o eliminando i cookie tramite le impostazioni del browser.',
+        body: (
+          <>
+            <p>Puoi modificare in qualsiasi momento la scelta relativa agli strumenti analitici:</p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <button type="button" onClick={() => setConsent('accepted')} className="px-5 py-2 rounded-full bg-[#1F1B14] text-white text-sm hover:bg-[#D4AF37] transition-colors">
+                Accetta strumenti analitici
+              </button>
+              <button type="button" onClick={() => setConsent('declined')} className="px-5 py-2 rounded-full border border-[#2A2A2A]/25 text-[#2A2A2A] text-sm hover:border-[#D4AF37] hover:text-[#D4AF37] transition-colors">
+                Revoca o rifiuta
+              </button>
+            </div>
+          </>
+        ),
       },
       {
         title: 'Contatti',
         body:
-          'Per qualsiasi domanda relativa alla presente informativa sui cookie è possibile scrivere all\'indirizzo [EMAIL DI CONTATTO].',
+          'Per qualsiasi domanda relativa alla presente informativa sui cookie è possibile scrivere a info@forexcmy.com.',
       },
       {
         title: 'Aggiornamenti dell\'informativa',

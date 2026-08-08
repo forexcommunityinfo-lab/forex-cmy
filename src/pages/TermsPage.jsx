@@ -6,7 +6,7 @@ const TermsPage = () => (
     eyebrow="Legale"
     title="Termini di servizio"
     subtitle="Condizioni generali di utilizzo del sito Forex_CMY e dei contenuti in esso pubblicati."
-    lastUpdated="[DATA ULTIMO AGGIORNAMENTO]"
+    lastUpdated="8 agosto 2026"
     sections={[
       {
         title: 'Finalità del sito',
@@ -81,12 +81,12 @@ const TermsPage = () => (
       {
         title: 'Legge applicabile',
         body:
-          'I presenti termini sono regolati dalla legge [LEGGE APPLICABILE]. Per qualsiasi controversia sarà competente in via esclusiva il foro di [FORO COMPETENTE], salvo diverse disposizioni inderogabili di legge.',
+          'I presenti termini sono regolati dalla legge italiana. Per le controversie con utenti qualificabili come consumatori resta competente il foro inderogabile previsto dalla normativa a tutela del consumatore. Negli altri casi, la competenza viene determinata secondo le disposizioni di legge applicabili.',
       },
       {
         title: 'Contatti',
         body:
-          'Per qualsiasi domanda relativa ai presenti termini è possibile scrivere all\'indirizzo [EMAIL DI CONTATTO].',
+          'Per qualsiasi domanda relativa ai presenti termini è possibile scrivere a info@forexcmy.com.',
       },
     ]}
   />

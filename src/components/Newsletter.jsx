@@ -73,6 +73,12 @@ const Newsletter = () => {
               {isSubmitting ? 'Iscrizione in corso...' : 'Iscriviti'}
             </button>
           </form>
+          <p className="mt-4 text-sm text-[#2A2A2A]/55 max-w-xl mx-auto">
+            Selezionando “Iscriviti” acconsenti a ricevere gli aggiornamenti descritti sopra. Puoi revocare il consenso in qualsiasi momento. Consulta l’{' '}
+            <a href="/informativa-privacy" className="text-[#D4AF37] underline hover:text-[#B8942F]">
+              informativa sulla privacy
+            </a>.
+          </p>
         </motion.div>
       </div>
     </section>
