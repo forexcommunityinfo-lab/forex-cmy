@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 
 const Navigation = () => {
@@ -53,17 +53,27 @@ const Navigation = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="flex items-center justify-between h-20">
+          <div className="relative flex h-20 items-center justify-center lg:h-32 lg:flex-col lg:justify-center">
             {/* Logo */}
             <Link
               to="/"
-              className="text-2xl font-bold tracking-tight text-[#2A2A2A] hover:text-[#D4AF37] transition-colors duration-300"
+              className="group inline-flex items-center lg:mb-2"
+              aria-label="Forex_CMY — torna alla home"
             >
-              Forex_CMY
+              <img
+                src="/images/brand/forex-cmy-monogram-dark.png"
+                alt=""
+                width="72"
+                height="72"
+                loading="eager"
+                decoding="async"
+                className="h-14 w-14 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-[72px] lg:w-[72px]"
+              />
+              <span className="sr-only">Forex_CMY</span>
             </Link>
 
             {/* Desktop Menu */}
-            <div className="hidden lg:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center justify-center space-x-8">
               {menuItems.map((item, index) => (
                 <Link
                   key={index}
@@ -82,7 +92,7 @@ const Navigation = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden w-10 h-10 flex flex-col items-center justify-center space-y-1.5 text-[#2A2A2A]"
+              className="absolute right-0 lg:hidden w-10 h-10 flex flex-col items-center justify-center space-y-1.5 text-[#2A2A2A]"
               aria-label="Apri o chiudi il menu"
             >
               <span
@@ -106,31 +116,32 @@ const Navigation = () => {
       </motion.nav>
 
       {/* Mobile Menu */}
-      <motion.div
-        initial={{ opacity: 0, x: '100%' }}
-        animate={{
-          opacity: mobileMenuOpen ? 1 : 0,
-          x: mobileMenuOpen ? 0 : '100%',
-        }}
-        transition={{ duration: 0.3 }}
-        className="fixed inset-0 z-40 lg:hidden bg-[#FAFAF8] pt-24 px-6"
-        style={{ pointerEvents: mobileMenuOpen ? 'auto' : 'none' }}
-      >
-        <div className="flex flex-col space-y-6">
-          {menuItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.to}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`text-2xl font-medium transition-colors duration-300 ${
-                isActive(item.to) ? 'text-[#D4AF37]' : 'text-[#2A2A2A] hover:text-[#D4AF37]'
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </motion.div>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed inset-0 z-40 lg:hidden bg-[#FAFAF8] pt-24 px-6"
+          >
+            <div className="flex flex-col space-y-6">
+              {menuItems.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-2xl font-medium transition-colors duration-300 ${
+                    isActive(item.to) ? 'text-[#D4AF37]' : 'text-[#2A2A2A] hover:text-[#D4AF37]'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

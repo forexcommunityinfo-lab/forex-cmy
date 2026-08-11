@@ -11,6 +11,42 @@ const ScrollCandlestick = () => {
   const phase3Ref = useRef(null);
 
   useEffect(() => {
+    // Deterministic initial state: avoids stale completed transforms after a
+    // refresh, resize or ScrollTrigger recalculation.
+    gsap.set('.phase1-lead-line', { scaleY: 0, opacity: 1, transformOrigin: 'top center' });
+    gsap.set('.red-wick-top, .red-wick-bottom', { scaleY: 0, transformOrigin: 'top center' });
+    gsap.set('.red-body', { clipPath: 'inset(0% 0% 100% 0%)', opacity: 0 });
+    gsap.set('.recovery-body', { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 });
+    gsap.set('.recovery-wick', { scaleY: 0, transformOrigin: 'bottom center' });
+    gsap.set('.recovery-base', { scaleX: 0, transformOrigin: 'center center' });
+
+    // One uninterrupted scroll sequence: connector → wick → body → lower wick.
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: phase1Ref.current,
+        start: 'top bottom',
+        end: 'top top',
+        scrub: 0.45,
+        invalidateOnRefresh: true,
+      },
+    })
+      .to(
+        '.phase1-lead-line',
+        { scaleY: 1, duration: 0.28, ease: 'power2.inOut' }
+      )
+      .to(
+        '.red-wick-top',
+        { scaleY: 1, duration: 0.14, ease: 'power1.out' }
+      )
+      .to(
+        '.red-body',
+        { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, duration: 0.42, ease: 'power1.inOut' }
+      )
+      .to(
+        '.red-wick-bottom',
+        { scaleY: 1, duration: 0.16, ease: 'power1.out' }
+      );
+
     // Phase 1: Red Bearish Candle (Market Pressure)
     const phase1Timeline = gsap.timeline({
       scrollTrigger: {
@@ -24,21 +60,6 @@ const ScrollCandlestick = () => {
     });
 
     phase1Timeline
-      .fromTo(
-        '.red-wick-top',
-        { scaleY: 0, transformOrigin: 'top center' },
-        { scaleY: 1, duration: 0.2, ease: 'power1.out' }
-      )
-      .fromTo(
-        '.red-body',
-        { scaleY: 0, transformOrigin: 'top center' },
-        { scaleY: 1, duration: 0.4, ease: 'power1.inOut' }
-      )
-      .fromTo(
-        '.red-wick-bottom',
-        { scaleY: 0, transformOrigin: 'top center' },
-        { scaleY: 1, duration: 0.2, ease: 'power1.out' }
-      )
       .to('.phase1-overlay', { opacity: 1, duration: 0.3 }, 0)
       .fromTo(
         '.phase1-text-1',
@@ -59,72 +80,59 @@ const ScrollCandlestick = () => {
         0.7
       );
 
-    // Phase 2: Transition
+    // Phase 2: compact, unpinned transition. The content itself signals that
+    // the page continues, without an empty holding scene.
     const phase2Timeline = gsap.timeline({
       scrollTrigger: {
         trigger: phase2Ref.current,
-        start: 'top top',
-        end: '+=100%',
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
+        start: 'top 88%',
+        end: 'top 28%',
+        scrub: 0.55,
       },
     });
 
     phase2Timeline
       .fromTo(
-        '.transition-line',
-        { scaleX: 0, transformOrigin: 'left center' },
-        { scaleX: 1, duration: 0.4, ease: 'power2.out' }
+        '.phase2-accent',
+        { scaleX: 0, transformOrigin: 'center center' },
+        { scaleX: 1, duration: 0.2, ease: 'power2.out' }
       )
       .fromTo(
         '.phase2-text',
         { opacity: 0, y: 40 },
         { opacity: 1, y: 0, duration: 0.4, stagger: 0.2 },
-        0.2
-      )
-      .to('.transition-glow', { opacity: 0.3, scale: 1.2, duration: 0.4 }, 0);
+        0.12
+      );
 
     // Phase 3: Green Bullish Candle (Recovery)
     const phase3Timeline = gsap.timeline({
       scrollTrigger: {
         trigger: phase3Ref.current,
-        start: 'top top',
-        end: '+=150%',
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
+        start: 'top 88%',
+        end: 'top 5%',
+        scrub: 0.6,
+        invalidateOnRefresh: true,
       },
     });
 
     phase3Timeline
-      .fromTo(
-        '.green-wick-bottom',
-        { scaleY: 0, transformOrigin: 'bottom center' },
-        { scaleY: 1, duration: 0.2, ease: 'power1.out' }
-      )
-      .fromTo(
-        '.green-body',
-        { scaleY: 0, transformOrigin: 'bottom center' },
-        { scaleY: 1, duration: 0.4, ease: 'power1.inOut' }
-      )
-      .fromTo(
-        '.green-wick-top',
-        { scaleY: 0, transformOrigin: 'bottom center' },
-        { scaleY: 1, duration: 0.2, ease: 'power1.out' }
-      )
       .to('.phase3-overlay', { opacity: 1, duration: 0.3 }, 0)
-      .fromTo(
-        '.surrounding-candle',
-        { opacity: 0, scaleY: 0, transformOrigin: 'bottom center' },
-        { opacity: 0.7, scaleY: 1, duration: 0.3, stagger: 0.1, ease: 'back.out(1.5)' },
-        0.4
-      )
       .fromTo(
         '.phase3-text',
         { opacity: 0, y: 50 },
         { opacity: 1, y: 0, duration: 0.3, stagger: 0.15 },
-        0.5
+        0.08
+      )
+      .to('.recovery-base', { scaleX: 1, duration: 0.18, ease: 'power2.out' }, 0.16)
+      .to(
+        '.recovery-body',
+        { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, duration: 0.5, stagger: 0.075, ease: 'power2.inOut' },
+        0.22
+      )
+      .to(
+        '.recovery-wick',
+        { scaleY: 1, duration: 0.28, stagger: 0.045, ease: 'power1.out' },
+        0.28
       );
 
     return () => {
@@ -137,44 +145,20 @@ const ScrollCandlestick = () => {
       {/* Phase 1: Red Bearish Candle (Market Pressure) */}
       <section
         ref={phase1Ref}
-        className="relative h-screen bg-[#FAFAF8] overflow-hidden"
+        className="relative h-screen bg-[#FAFAF8] overflow-visible"
       >
         {/* Darkening overlay */}
         <div className="phase1-overlay absolute inset-0 bg-gradient-to-b from-[#2A2A2A]/0 via-[#2A2A2A]/20 to-[#2A2A2A]/40 opacity-0" />
 
-        {/* Background grid */}
-        <div className="absolute inset-0 opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="none">
-            {[...Array(12)].map((_, i) => (
-              <line
-                key={`h-${i}`}
-                x1="0"
-                y1={66.67 * i}
-                x2="1200"
-                y2={66.67 * i}
-                stroke="#2A2A2A"
-                strokeWidth="1"
-              />
-            ))}
-            {[...Array(16)].map((_, i) => (
-              <line
-                key={`v-${i}`}
-                x1={75 * i}
-                y1="0"
-                x2={75 * i}
-                y2="800"
-                stroke="#2A2A2A"
-                strokeWidth="1"
-              />
-            ))}
-          </svg>
-        </div>
-
-        {/* Red Candlestick - Center */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
-          <div className="red-wick-top w-1 h-40 bg-[#C74445]" />
-          <div className="red-body w-20 md:w-24 h-80 md:h-96 bg-gradient-to-b from-[#C74445] to-[#A03234] rounded-sm shadow-2xl" />
-          <div className="red-wick-bottom w-1 h-32 bg-[#C74445]" />
+        {/* A single vertical layout guarantees physical continuity. */}
+        <div className="absolute inset-x-0 -top-24 bottom-0 z-10 flex flex-col items-center pointer-events-none">
+          <div className="phase1-lead-line min-h-0 flex-1 w-1 bg-gradient-to-b from-[#D4AF37]/25 via-[#D4AF37]/75 to-[#D4AF37] [clip-path:polygon(42%_0%,58%_0%,100%_100%,0%_100%)]" />
+          <div className="flex flex-col items-center">
+            <div className="red-wick-top w-1 h-40 bg-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.3)]" />
+            <div className="red-body w-20 md:w-24 h-80 md:h-96 bg-[#FAFAF8] border-2 border-[#D4AF37] rounded-sm shadow-[0_24px_70px_rgba(31,27,20,0.12),0_0_28px_rgba(212,175,55,0.14)]" />
+            <div className="red-wick-bottom w-1 h-32 bg-[#D4AF37] shadow-[0_0_12px_rgba(212,175,55,0.3)]" />
+          </div>
+          <div className="min-h-0 flex-1" />
         </div>
 
         {/* Phase 1 Text Content */}
@@ -196,15 +180,10 @@ const ScrollCandlestick = () => {
       {/* Phase 2: Transition Section */}
       <section
         ref={phase2Ref}
-        className="relative h-screen bg-gradient-to-b from-[#F5F3F0] to-[#FAFAF8] overflow-hidden flex items-center justify-center"
+        className="relative h-[78svh] min-h-[620px] bg-[radial-gradient(circle_at_50%_45%,rgba(212,175,55,0.1),transparent_38%),linear-gradient(to_bottom,#F5F3F0_0%,#F2EBDD_100%)] overflow-hidden flex items-center justify-center"
       >
-        <div className="absolute left-0 top-1/2 w-full h-px bg-[#D4AF37]/20 z-10">
-          <div className="transition-line h-full bg-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.5)]" />
-        </div>
-
-        <div className="transition-glow absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#D4AF37] opacity-0 rounded-full blur-3xl" />
-
         <div className="max-w-4xl mx-auto px-6 text-center space-y-8 z-20">
+          <div className="phase2-accent mx-auto h-px w-24 bg-[#D4AF37] shadow-[0_0_16px_rgba(212,175,55,0.35)]" />
           <h2 className="phase2-text text-4xl md:text-6xl lg:text-7xl font-bold text-[#2A2A2A] opacity-0">
             Non conta prevedere ogni movimento.
           </h2>
@@ -217,48 +196,42 @@ const ScrollCandlestick = () => {
       {/* Phase 3: Green Bullish Candle (Recovery) */}
       <section
         ref={phase3Ref}
-        className="relative h-screen bg-gradient-to-b from-[#FAFAF8] to-[#F5F3F0] overflow-hidden"
+        className="relative h-screen -mt-px bg-[#FAFAF8] overflow-hidden"
       >
-        <div className="phase3-overlay absolute inset-0 bg-gradient-to-b from-[#D4AF37]/5 via-[#3D9970]/5 to-[#3D9970]/10 opacity-0" />
+        <div className="phase3-overlay absolute inset-0 bg-gradient-to-b from-[#2A2A2A]/40 via-[#2A2A2A]/20 to-[#2A2A2A]/0 opacity-0" />
 
-        <div className="absolute inset-0 opacity-10">
-          <svg className="w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="none">
-            {[...Array(12)].map((_, i) => (
-              <line
-                key={`h-${i}`}
-                x1="0"
-                y1={66.67 * i}
-                x2="1200"
-                y2={66.67 * i}
-                stroke="#2A2A2A"
-                strokeWidth="1"
-              />
-            ))}
-          </svg>
-        </div>
+        <div className="absolute inset-x-0 bottom-[9%] md:bottom-[8%] z-10 flex items-end justify-center gap-3 md:gap-6 px-4 pb-3 pointer-events-none">
+          <div className="recovery-base absolute bottom-0 left-1/2 h-px w-[78%] max-w-4xl -translate-x-1/2 bg-gradient-to-r from-transparent via-[#D4AF37]/70 to-transparent" />
 
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 translate-y-1/4 flex flex-col-reverse items-center z-10">
-          <div className="green-wick-bottom w-1 h-36 bg-[#3D9970]" />
-          <div className="green-body w-24 md:w-28 h-80 md:h-[28rem] bg-gradient-to-t from-[#3D9970] to-[#4CAF81] rounded-sm shadow-2xl" />
-          <div className="green-wick-top w-1 h-24 bg-[#3D9970]" />
-        </div>
+          <div className="flex flex-col items-center opacity-55">
+            <div className="recovery-wick h-8 md:h-12 w-px bg-[#D4AF37]" />
+            <div className="recovery-body h-24 md:h-36 w-9 md:w-11 rounded-sm border border-[#D4AF37] bg-[#FAFAF8]" />
+            <div className="recovery-wick h-7 md:h-9 w-px bg-[#D4AF37]" />
+          </div>
 
-        <div className="absolute left-[30%] top-[55%] flex flex-col-reverse items-center opacity-0 z-0">
-          <div className="surrounding-candle w-1 h-16 bg-[#3D9970]" />
-          <div className="surrounding-candle w-12 h-40 bg-[#3D9970]/80 rounded-sm" />
-          <div className="surrounding-candle w-1 h-10 bg-[#3D9970]" />
-        </div>
+          <div className="flex flex-col items-center opacity-75">
+            <div className="recovery-wick h-12 md:h-16 w-px bg-[#1F1B14]" />
+            <div className="recovery-body h-40 md:h-56 w-11 md:w-14 rounded-sm border border-[#1F1B14] bg-[#D4AF37]/75" />
+            <div className="recovery-wick h-8 md:h-12 w-px bg-[#1F1B14]" />
+          </div>
 
-        <div className="absolute left-[70%] top-[50%] flex flex-col-reverse items-center opacity-0 z-0">
-          <div className="surrounding-candle w-1 h-14 bg-[#3D9970]" />
-          <div className="surrounding-candle w-14 h-48 bg-[#3D9970]/80 rounded-sm" />
-          <div className="surrounding-candle w-1 h-8 bg-[#3D9970]" />
-        </div>
+          <div className="flex flex-col items-center">
+            <div className="recovery-wick h-16 md:h-24 w-1 bg-[#1F1B14]" />
+            <div className="recovery-body h-64 md:h-80 w-20 md:w-24 rounded-sm border-2 border-[#1F1B14] bg-[#D4AF37] shadow-[0_24px_70px_rgba(31,27,20,0.18),0_0_32px_rgba(212,175,55,0.2)]" />
+            <div className="recovery-wick h-12 md:h-16 w-1 bg-[#1F1B14]" />
+          </div>
 
-        <div className="absolute left-[20%] top-[60%] flex flex-col-reverse items-center opacity-0 z-0">
-          <div className="surrounding-candle w-1 h-12 bg-[#3D9970]" />
-          <div className="surrounding-candle w-10 h-32 bg-[#3D9970]/80 rounded-sm" />
-          <div className="surrounding-candle w-1 h-8 bg-[#3D9970]" />
+          <div className="flex flex-col items-center opacity-80">
+            <div className="recovery-wick h-10 md:h-14 w-px bg-[#D4AF37]" />
+            <div className="recovery-body h-44 md:h-64 w-12 md:w-16 rounded-sm border border-[#D4AF37] bg-[#FAFAF8]" />
+            <div className="recovery-wick h-10 md:h-14 w-px bg-[#D4AF37]" />
+          </div>
+
+          <div className="flex flex-col items-center opacity-50">
+            <div className="recovery-wick h-8 md:h-12 w-px bg-[#1F1B14]" />
+            <div className="recovery-body h-28 md:h-40 w-9 md:w-11 rounded-sm border border-[#1F1B14]/70 bg-[#D4AF37]/45" />
+            <div className="recovery-wick h-7 md:h-9 w-px bg-[#1F1B14]" />
+          </div>
         </div>
 
         <div className="absolute inset-0 flex items-start justify-center pt-20 md:pt-32 pointer-events-none z-20">

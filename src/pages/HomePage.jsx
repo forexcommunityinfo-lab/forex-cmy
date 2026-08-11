@@ -4,21 +4,10 @@ import { SmoothScroll } from '../components/SmoothScroll';
 import Navigation from '../components/Navigation';
 import Hero from '../components/Hero';
 import ScrollCandlestick from '../components/ScrollCandlestick';
-import HowItWorks from '../components/HowItWorks';
-import VideoPresentation from '../components/VideoPresentation';
-import Results from '../components/Results';
-import Myfxbook from '../components/Myfxbook';
-import Reviews from '../components/Reviews';
-import FreeEbook from '../components/FreeEbook';
-import Philosophy from '../components/Philosophy';
-import FAQ from '../components/FAQ';
-import Contact from '../components/Contact';
-import FinalCTA from '../components/FinalCTA';
-import Newsletter from '../components/Newsletter';
+import HomePageLinks from '../components/HomePageLinks';
 import Footer from '../components/Footer';
-import Marquee from '../components/Marquee';
 
-// Full-length landing page: contains every existing section, in original order.
+// Compact landing page: visual introduction followed by links to focused pages.
 const HomePage = () => {
   const location = useLocation();
 
@@ -44,19 +33,7 @@ const HomePage = () => {
 
         <Hero />
         <ScrollCandlestick />
-        <HowItWorks />
-        <VideoPresentation />
-        <Results />
-        <Myfxbook />
-        <Reviews />
-        <FreeEbook />
-        <Marquee />
-        <Philosophy />
-        <FAQ />
-        <Contact />
-        <FinalCTA />
-        <Newsletter />
-
+        <HomePageLinks />
         <Footer />
       </div>
     </SmoothScroll>
