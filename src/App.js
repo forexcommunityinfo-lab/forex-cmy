@@ -5,6 +5,7 @@ import './styles/animations.css';
 import { Toaster } from './components/ui/sonner';
 import CookieConsent from './components/CookieConsent';
 import PageTracker from './components/PageTracker';
+import ScrollToTop from './components/ScrollToTop';
 
 import HomePage from './pages/HomePage';
 import HowItWorksPage from './pages/HowItWorksPage';
@@ -17,11 +18,13 @@ import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import CookiePage from './pages/CookiePage';
 import PremioAnnualePage from './pages/PremioAnnualePage';
+import FreeEbookPage from './pages/FreeEbookPage';
 
 function App() {
   return (
     <BrowserRouter>
       <PageTracker />
+      <ScrollToTop />
       <Routes>
         {/* Public */}
         <Route path="/" element={<HomePage />} />
@@ -32,6 +35,7 @@ function App() {
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contatti" element={<ContactPage />} />
         <Route path="/riconoscimento-annuale" element={<PremioAnnualePage />} />
+        <Route path="/ebook-gratuito" element={<FreeEbookPage />} />
         <Route path="/premio-annuale" element={<Navigate to="/riconoscimento-annuale" replace />} />
 
         {/* Legal */}

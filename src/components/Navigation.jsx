@@ -29,7 +29,7 @@ const Navigation = () => {
     { label: 'Risultati', to: '/risultati', type: 'route' },
     { label: 'Recensioni', to: '/recensioni', type: 'route' },
     { label: 'Riconoscimento annuale', to: '/riconoscimento-annuale', type: 'route' },
-    { label: 'eBook gratuito', to: '/#ebook', type: 'anchor' },
+    { label: 'eBook gratuito', to: '/ebook-gratuito', type: 'route' },
     { label: 'FAQ', to: '/faq', type: 'route' },
     { label: 'Contatti', to: '/contatti', type: 'route' },
   ];

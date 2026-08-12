@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import Lenis from '@studio-freight/lenis';
 
 export const SmoothScroll = ({ children }) => {
+  const { pathname, hash } = useLocation();
+  const lenisRef = useRef(null);
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.2,
@@ -14,13 +18,20 @@ export const SmoothScroll = ({ children }) => {
       touchMultiplier: 2,
       infinite: false,
     });
+    lenisRef.current = lenis;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
+    if (!hash) {
+      lenis.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo(0, 0);
     }
 
-    requestAnimationFrame(raf);
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
 
     // Expose lenis to GSAP ScrollTrigger
     if (window.gsap && window.ScrollTrigger) {
@@ -34,9 +45,31 @@ export const SmoothScroll = ({ children }) => {
     }
 
     return () => {
+      cancelAnimationFrame(rafId);
+      lenisRef.current = null;
       lenis.destroy();
     };
-  }, []);
+  }, []); // Lenis instance lives for the layout lifetime.
+
+  useEffect(() => {
+    if (hash) return;
+
+    const reset = () => {
+      lenisRef.current?.scrollTo(0, { immediate: true, force: true });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    reset();
+    const firstFrame = requestAnimationFrame(reset);
+    const secondFrame = requestAnimationFrame(() => requestAnimationFrame(reset));
+
+    return () => {
+      cancelAnimationFrame(firstFrame);
+      cancelAnimationFrame(secondFrame);
+    };
+  }, [pathname, hash]);
 
   return <>{children}</>;
 };

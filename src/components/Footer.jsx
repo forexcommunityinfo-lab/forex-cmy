@@ -69,7 +69,7 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/#ebook" className="text-white/60 hover:text-[#D4AF37] transition-colors duration-200">
+                  <Link to="/ebook-gratuito" className="text-white/60 hover:text-[#D4AF37] transition-colors duration-200">
                     eBook gratuito
                   </Link>
                 </li>

@@ -152,6 +152,7 @@ const Hero = () => {
       gsap.set('.bridge-path', { strokeDasharray: 900, strokeDashoffset: 900 });
       gsap.set('.capital-markers, .sync-bridge text, .system text, .data-packet', { opacity: 0 });
       gsap.set('.hero-copy > *', { opacity: 0, y: 24 });
+      gsap.set('.mobile-brand-wordmark', { opacity: 0, y: -10 });
       gsap.set('.mobile-market-grid, .mobile-market-area', { opacity: 0 });
       gsap.set('.mobile-market-wick, .mobile-market-body', { scaleY: 0, transformOrigin: 'bottom center', transformBox: 'fill-box' });
 
@@ -167,6 +168,7 @@ const Hero = () => {
         .to('.account-system .system-ring', { strokeDashoffset: 0, duration: 1.15, stagger: 0.08, ease: 'power2.inOut' }, 1.18)
         .to('.account-vault', { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.7)' }, 1.48)
         .to('.capital-markers, .sync-bridge text, .system text, .data-packet', { opacity: 1, duration: 0.55, stagger: 0.035 }, 1.58)
+        .to('.mobile-brand-wordmark', { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.38)
         .to('.hero-copy > *', { opacity: 1, y: 0, duration: 0.58, stagger: 0.1, ease: 'power3.out' }, 1.25)
         .to('.mobile-market-grid', { opacity: 1, duration: 0.55 }, 0.1)
         .to('.mobile-market-wick', { scaleY: 1, duration: 0.3, stagger: 0.09, ease: 'power2.out' }, 0.3)
@@ -193,13 +195,18 @@ const Hero = () => {
       <div className="absolute inset-0 opacity-[0.68] md:hidden"><MobileMinimalChart /></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_50%,rgba(250,247,240,0.9)_0%,rgba(250,247,240,0.68)_27%,rgba(245,241,234,0.08)_62%)] pointer-events-none" />
 
+      <div className="mobile-brand-wordmark absolute inset-x-0 top-24 z-10 text-center md:hidden">
+        <p className="text-[1.85rem] font-bold tracking-[0.11em] text-[#1F1B14]">FOREX CMY</p>
+        <p className="mt-1.5 text-[11px] font-semibold uppercase tracking-[0.38em] text-[#B8942F]">Successo condiviso</p>
+      </div>
+
       <div className="relative z-10 flex min-h-[100svh] items-center px-5 pb-8 pt-20 md:px-16 md:pb-0 md:pt-24">
         <div className="hero-copy mx-auto w-full max-w-4xl text-center">
           <h1 className="mb-4 text-[2rem] font-bold leading-[1.05] tracking-tight text-[#1F1B14] sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl">Il tuo conto.<br />Il tuo capitale.<br /><span className="text-[#2A2A2A]/55">Una <span className="italic font-semibold text-[#D4AF37]">strategia connessa</span>.</span></h1>
           <p className="mx-auto mb-6 max-w-lg text-sm leading-relaxed text-[#2A2A2A]/60 md:mb-10 md:text-base">Una strategia definita opera sul tuo conto personale, mentre capitale e controllo restano tuoi.</p>
           <div className="flex w-full flex-col justify-center gap-3 sm:flex-row md:w-auto">
-            <a href="#how-it-works" className="w-full rounded-full bg-[#1F1B14] px-7 py-3.5 text-center text-sm font-medium text-white shadow-[0_8px_24px_rgba(31,27,20,0.15)] transition-all duration-300 hover:bg-[#D4AF37] sm:w-auto">Scopri il sistema</a>
-            <a href="#results" className="w-full rounded-full border border-[#2A2A2A]/25 bg-[#FAF7F0]/60 px-7 py-3.5 text-center text-sm font-medium text-[#2A2A2A]/75 backdrop-blur-sm transition-all duration-300 hover:border-[#D4AF37] hover:text-[#D4AF37] sm:w-auto">Consulta i risultati verificati</a>
+            <a href="/come-funziona" className="w-full rounded-full bg-[#1F1B14] px-7 py-3.5 text-center text-sm font-medium text-white shadow-[0_8px_24px_rgba(31,27,20,0.15)] transition-all duration-300 hover:bg-[#D4AF37] sm:w-auto">Scopri il sistema</a>
+            <a href="/risultati" className="w-full rounded-full border border-[#2A2A2A]/25 bg-[#FAF7F0]/60 px-7 py-3.5 text-center text-sm font-medium text-[#2A2A2A]/75 backdrop-blur-sm transition-all duration-300 hover:border-[#D4AF37] hover:text-[#D4AF37] sm:w-auto">Consulta i risultati verificati</a>
           </div>
         </div>
       </div>

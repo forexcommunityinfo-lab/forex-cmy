@@ -8,6 +8,7 @@ import {
   MessageSquareText,
   PlayCircle,
   Settings2,
+  BookOpen,
 } from 'lucide-react';
 
 const pageLinks = [
@@ -40,6 +41,12 @@ const pageLinks = [
     description: 'Trova risposte rapide sui dubbi più comuni prima di iniziare.',
     to: '/faq',
     icon: CircleHelp,
+  },
+  {
+    title: 'eBook gratuito',
+    description: 'Scarica il manuale pratico su rischio, drawdown e valutazione consapevole di una strategia.',
+    to: '/ebook-gratuito',
+    icon: BookOpen,
   },
   {
     title: 'Riconoscimento annuale',
