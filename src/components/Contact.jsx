@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Mail, Instagram, Send } from 'lucide-react';
 import { submitContactForm } from '../mock';
 import { useToast } from '../hooks/use-toast';
+import { useSearchParams } from 'react-router-dom';
 
 // Instagram profile — update here to change the username / link globally
 const INSTAGRAM_USERNAME = '@forex_cmy';
@@ -12,6 +13,8 @@ const Contact = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  const isRecognitionRequest = searchParams.get('richiesta') === 'riconoscimento-annuale';
   
   const [formData, setFormData] = useState({
     name: '',
@@ -43,7 +46,11 @@ const Contact = () => {
 
     setIsSubmitting(true);
     try {
-      const result = await submitContactForm(formData);
+      const result = await submitContactForm({
+        ...formData,
+        type: isRecognitionRequest ? 'recognition' : 'contact',
+        subject: isRecognitionRequest ? 'Richiesta riconoscimento annuale' : 'Richiesta dal portale',
+      });
       if (result.success) {
         toast({
           title: 'Messaggio inviato',
@@ -80,10 +87,12 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h2 className="text-5xl md:text-7xl font-bold text-[#2A2A2A] mb-6">
-            Parliamone
+            {isRecognitionRequest ? 'Richiedi il riconoscimento annuale' : 'Parliamone'}
           </h2>
           <p className="text-xl text-[#2A2A2A]/60 max-w-2xl mx-auto">
-            Hai domande sul servizio o vuoi capire come collegare il tuo conto? Scrivici per ricevere informazioni chiare e pertinenti.
+            {isRecognitionRequest
+              ? 'Compila il modulo: la richiesta arriverà direttamente al canale dedicato e sarà valutata individualmente.'
+              : 'Hai domande sul servizio o vuoi capire come collegare il tuo conto? Scrivici per ricevere informazioni chiare e pertinenti.'}
           </p>
         </motion.div>
 

@@ -47,6 +47,17 @@ export const track = (event, properties = {}) => {
   } catch {}
 };
 
+// Sends a custom event to the Google Analytics tag loaded in public/index.html.
+// Analytics storage is used only after the visitor has accepted cookies.
+export const trackGoogleEvent = (event, properties = {}) => {
+  if (getConsent() !== 'accepted') return;
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+
+  try {
+    window.gtag('event', event, properties);
+  } catch {}
+};
+
 export const identify = (userId, traits = {}) => {
   if (!initialized || getConsent() !== 'accepted') return;
   try {

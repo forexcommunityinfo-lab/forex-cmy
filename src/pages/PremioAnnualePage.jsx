@@ -247,7 +247,7 @@ const PremioAnnualePage = () => (
 
             <div className="flex flex-col sm:flex-row gap-3">
               <Link
-                to="/contatti"
+                to="/contatti?richiesta=riconoscimento-annuale"
                 data-testid="reward-contact-btn"
                 className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 bg-[#1F1B14] text-white text-sm font-medium rounded-full hover:bg-[#D4AF37] transition-all duration-300 shadow-[0_8px_24px_rgba(31,27,20,0.15)]"
               >

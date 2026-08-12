@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Download, Check } from 'lucide-react';
 import { subscribeNewsletter } from '../mock';
 import { useToast } from '../hooks/use-toast';
+import { trackGoogleEvent } from '../lib/analytics';
 
 const EBOOK_URL = '/downloads/trading-senza-illusioni-forex-cmy.pdf';
 
@@ -18,6 +19,11 @@ const FreeEbook = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const downloadEbook = () => {
+    trackGoogleEvent('ebook_download', {
+      ebook_title: 'Trading senza illusioni',
+      file_name: 'Trading-senza-illusioni-Forex-CMY.pdf',
+    });
+
     const link = document.createElement('a');
     link.href = EBOOK_URL;
     link.download = 'Trading-senza-illusioni-Forex-CMY.pdf';
@@ -40,7 +46,7 @@ const FreeEbook = () => {
 
     setIsSubmitting(true);
     try {
-      const result = await subscribeNewsletter(formData.email);
+      const result = await subscribeNewsletter(formData.email, 'ebook');
       if (result.success) {
         downloadEbook();
         toast({

@@ -44,42 +44,22 @@ export const mockTestimonials = [
   }
 ];
 
-// Newsletter subscription (localStorage for demo)
-export const subscribeNewsletter = (email) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const subscribers = JSON.parse(localStorage.getItem('newsletter_subscribers') || '[]');
-      
-      if (subscribers.includes(email)) {
-        resolve({ success: false, message: 'Questo indirizzo email risulta già iscritto.' });
-        return;
-      }
-      
-      subscribers.push(email);
-      localStorage.setItem('newsletter_subscribers', JSON.stringify(subscribers));
-      resolve({ success: true, message: 'Iscrizione completata con successo.' });
-    }, 800);
+const sendForm = async (payload) => {
+  const response = await fetch('/api/forms', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
   });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(result.message || 'Invio non riuscito.');
+  return result;
 };
 
-// Contact form submission (localStorage for demo)
-export const submitContactForm = (formData) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const contacts = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
-      
-      const submission = {
-        ...formData,
-        id: Date.now(),
-        timestamp: new Date().toISOString()
-      };
-      
-      contacts.push(submission);
-      localStorage.setItem('contact_submissions', JSON.stringify(contacts));
-      resolve({ success: true, message: 'Messaggio inviato con successo.' });
-    }, 1000);
-  });
-};
+export const subscribeNewsletter = (email, source = 'newsletter') =>
+  sendForm({ type: source === 'ebook' ? 'ebook' : 'newsletter', email, website: '' });
+
+export const submitContactForm = (formData) =>
+  sendForm({ type: formData.type || 'contact', ...formData, website: '' });
 
 // Get all submissions (for demo purposes)
 export const getStoredData = () => {
