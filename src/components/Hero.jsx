@@ -107,6 +107,38 @@ const SyncArchitecture = () => (
   </svg>
 );
 
+const MobileMinimalChart = () => (
+  <svg className="h-full w-full" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="mobile-market-area" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor="#D4AF37" stopOpacity="0.18" />
+        <stop offset="1" stopColor="#D4AF37" stopOpacity="0" />
+      </linearGradient>
+    </defs>
+    <g className="mobile-market-grid" stroke="#514A3F" strokeOpacity="0.08" strokeWidth="1">
+      {[170, 290, 410, 530, 650, 770].map((y) => <line key={y} x1="18" y1={y} x2="372" y2={y} />)}
+      {[42, 110, 178, 246, 314, 372].map((x) => <line key={x} x1={x} y1="140" x2={x} y2="790" />)}
+    </g>
+    <path className="mobile-market-area" d="M 18 710 C 72 690 88 735 130 660 S 195 625 222 548 S 278 500 306 405 S 342 335 372 280 L 372 790 L 18 790 Z" fill="url(#mobile-market-area)" />
+    {[
+      [40, 665, 722, 636, 748, '#FAFAF8', '#D4AF37'],
+      [82, 682, 724, 650, 752, '#1F1B14', '#D4AF37'],
+      [124, 615, 690, 584, 718, '#D4AF37', '#1F1B14'],
+      [166, 592, 638, 558, 672, '#FAFAF8', '#D4AF37'],
+      [208, 520, 604, 482, 636, '#D4AF37', '#1F1B14'],
+      [250, 486, 534, 448, 570, '#1F1B14', '#D4AF37'],
+      [292, 388, 500, 352, 538, '#D4AF37', '#1F1B14'],
+      [334, 330, 408, 292, 442, '#FAFAF8', '#D4AF37'],
+      [366, 246, 342, 214, 378, '#1F1B14', '#D4AF37'],
+    ].map(([x, top, bottom, wickTop, wickBottom, fill, stroke], index) => (
+      <g key={index} className="mobile-market-candle">
+        <line className="mobile-market-wick" x1={x} y1={wickTop} x2={x} y2={wickBottom} stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+        <rect className="mobile-market-body" x={x - 12} y={top} width="24" height={bottom - top} rx="3" fill={fill} stroke={stroke} strokeWidth="2" />
+      </g>
+    ))}
+  </svg>
+);
+
 const Hero = () => {
   const heroRef = useRef(null);
 
@@ -120,6 +152,8 @@ const Hero = () => {
       gsap.set('.bridge-path', { strokeDasharray: 900, strokeDashoffset: 900 });
       gsap.set('.capital-markers, .sync-bridge text, .system text, .data-packet', { opacity: 0 });
       gsap.set('.hero-copy > *', { opacity: 0, y: 24 });
+      gsap.set('.mobile-market-grid, .mobile-market-area', { opacity: 0 });
+      gsap.set('.mobile-market-wick, .mobile-market-body', { scaleY: 0, transformOrigin: 'bottom center', transformBox: 'fill-box' });
 
       gsap.timeline({ delay: 0.12 })
         .to('.architecture-grid', { opacity: 1, duration: 0.65 }, 0)
@@ -133,7 +167,12 @@ const Hero = () => {
         .to('.account-system .system-ring', { strokeDashoffset: 0, duration: 1.15, stagger: 0.08, ease: 'power2.inOut' }, 1.18)
         .to('.account-vault', { opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.7)' }, 1.48)
         .to('.capital-markers, .sync-bridge text, .system text, .data-packet', { opacity: 1, duration: 0.55, stagger: 0.035 }, 1.58)
-        .to('.hero-copy > *', { opacity: 1, y: 0, duration: 0.58, stagger: 0.1, ease: 'power3.out' }, 1.25);
+        .to('.hero-copy > *', { opacity: 1, y: 0, duration: 0.58, stagger: 0.1, ease: 'power3.out' }, 1.25)
+        .to('.mobile-market-grid', { opacity: 1, duration: 0.55 }, 0.1)
+        .to('.mobile-market-wick', { scaleY: 1, duration: 0.3, stagger: 0.09, ease: 'power2.out' }, 0.3)
+        .to('.mobile-market-body', { scaleY: 1, duration: 0.42, stagger: 0.09, ease: 'back.out(1.4)' }, 0.4)
+        .to('.mobile-market-area', { opacity: 1, duration: 0.7 }, 1.05);
+
 
       gsap.to('.architecture-scene', {
         scale: 1.075,
@@ -150,10 +189,11 @@ const Hero = () => {
   return (
     <section ref={heroRef} id="home" className="relative min-h-[100svh] w-full overflow-hidden bg-[#F5F1EA]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_48%,rgba(61,125,99,0.09),transparent_28%),radial-gradient(circle_at_22%_48%,rgba(212,175,55,0.12),transparent_30%),linear-gradient(145deg,#FAF7F0_0%,#F5F1EA_55%,#ECE3D2_100%)]" />
-      <div className="architecture-scene absolute inset-0 opacity-[0.72] will-change-transform"><SyncArchitecture /></div>
+      <div className="architecture-scene absolute inset-0 hidden opacity-[0.72] will-change-transform md:block"><SyncArchitecture /></div>
+      <div className="absolute inset-0 opacity-[0.68] md:hidden"><MobileMinimalChart /></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_34%_50%,rgba(250,247,240,0.9)_0%,rgba(250,247,240,0.68)_27%,rgba(245,241,234,0.08)_62%)] pointer-events-none" />
 
-      <div className="relative z-10 flex min-h-[100svh] items-center px-6 pt-24 md:px-16 md:pt-24">
+      <div className="relative z-10 flex min-h-[100svh] items-center px-5 pb-8 pt-20 md:px-16 md:pb-0 md:pt-24">
         <div className="hero-copy mx-auto w-full max-w-4xl text-center">
           <h1 className="mb-4 text-[2rem] font-bold leading-[1.05] tracking-tight text-[#1F1B14] sm:text-5xl md:mb-6 md:text-6xl lg:text-7xl">Il tuo conto.<br />Il tuo capitale.<br /><span className="text-[#2A2A2A]/55">Una <span className="italic font-semibold text-[#D4AF37]">strategia connessa</span>.</span></h1>
           <p className="mx-auto mb-6 max-w-lg text-sm leading-relaxed text-[#2A2A2A]/60 md:mb-10 md:text-base">Una strategia definita opera sul tuo conto personale, mentre capitale e controllo restano tuoi.</p>
