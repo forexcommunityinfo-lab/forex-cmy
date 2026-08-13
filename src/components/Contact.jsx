@@ -4,6 +4,7 @@ import { Mail, Instagram, Send } from 'lucide-react';
 import { submitContactForm } from '../mock';
 import { useToast } from '../hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
+import SuccessPopup from './SuccessPopup';
 
 // Instagram profile — update here to change the username / link globally
 const INSTAGRAM_USERNAME = '@forex_cmy';
@@ -23,6 +24,7 @@ const Contact = () => {
     consent: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -52,11 +54,8 @@ const Contact = () => {
         subject: isRecognitionRequest ? 'Richiesta riconoscimento annuale' : 'Richiesta dal portale',
       });
       if (result.success) {
-        toast({
-          title: 'Messaggio inviato',
-          description: 'Riceverai una risposta entro 24-48 ore lavorative.',
-        });
         setFormData({ name: '', email: '', message: '', consent: false });
+        setShowSuccess(true);
       }
     } catch (error) {
       toast({
@@ -70,6 +69,7 @@ const Contact = () => {
   };
 
   return (
+    <>
     <section
       id="contact"
       ref={sectionRef}
@@ -243,6 +243,16 @@ const Contact = () => {
         </div>
       </div>
     </section>
+    <SuccessPopup
+      open={showSuccess}
+      onClose={() => setShowSuccess(false)}
+      eyebrow={isRecognitionRequest ? 'Richiesta ricevuta' : 'Messaggio inviato'}
+      title={isRecognitionRequest ? 'Grazie per la richiesta.' : 'Il tuo messaggio è stato inviato.'}
+      description={isRecognitionRequest
+        ? 'Verificheremo le informazioni relative al riconoscimento annuale e ti ricontatteremo entro 24-48 ore lavorative.'
+        : 'Grazie per averci contattato. Abbiamo ricevuto la tua richiesta e ti risponderemo entro 24-48 ore lavorative.'}
+    />
+    </>
   );
 };
 

@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { submitContactForm } from '../mock';
 import { X, Send } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
+import SuccessPopup from './SuccessPopup';
 
 const ContactForm = ({ isOpen, onClose }) => {
   const { toast } = useToast();
@@ -14,6 +15,7 @@ const ContactForm = ({ isOpen, onClose }) => {
     consent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -40,12 +42,9 @@ const ContactForm = ({ isOpen, onClose }) => {
     try {
       const result = await submitContactForm(formData);
       if (result.success) {
-        toast({
-          title: 'Messaggio inviato',
-          description: result.message,
-        });
         setFormData({ name: '', email: '', subject: '', message: '', consent: false });
-        setTimeout(() => onClose(), 1500);
+        onClose();
+        setShowSuccess(true);
       }
     } catch (error) {
       toast({
@@ -58,9 +57,9 @@ const ContactForm = ({ isOpen, onClose }) => {
     }
   };
 
-  if (!isOpen) return null;
-
   return (
+    <>
+    {isOpen && (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -180,6 +179,14 @@ const ContactForm = ({ isOpen, onClose }) => {
         </form>
       </motion.div>
     </motion.div>
+    )}
+    <SuccessPopup
+      open={showSuccess}
+      onClose={() => setShowSuccess(false)}
+      title="Il tuo messaggio è stato inviato."
+      description="Grazie per averci contattato. Abbiamo ricevuto la tua richiesta e ti risponderemo entro 24-48 ore lavorative."
+    />
+    </>
   );
 };
 

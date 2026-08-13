@@ -4,6 +4,7 @@ import { Download, Check } from 'lucide-react';
 import { subscribeNewsletter } from '../mock';
 import { useToast } from '../hooks/use-toast';
 import { trackGoogleEvent } from '../lib/analytics';
+import SuccessPopup from './SuccessPopup';
 
 const EBOOK_URL = '/downloads/trading-senza-illusioni-forex-cmy.pdf';
 
@@ -17,6 +18,7 @@ const FreeEbook = () => {
     consent: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const downloadEbook = () => {
     trackGoogleEvent('ebook_download', {
@@ -49,17 +51,11 @@ const FreeEbook = () => {
       const result = await subscribeNewsletter(formData.email, 'ebook');
       if (result.success) {
         downloadEbook();
-        toast({
-          title: 'Download avviato',
-          description: 'L’eBook “Trading senza illusioni” è pronto per il download.',
-        });
         setFormData({ email: '', consent: false });
+        setShowSuccess(true);
       } else {
         downloadEbook();
-        toast({
-          title: 'Indirizzo già registrato',
-          description: 'Bentornato! Il download dell’eBook è stato avviato nuovamente.',
-        });
+        setShowSuccess(true);
       }
     } catch (error) {
       toast({
@@ -73,6 +69,7 @@ const FreeEbook = () => {
   };
 
   return (
+    <>
     <section
       id="ebook"
       ref={sectionRef}
@@ -179,6 +176,15 @@ const FreeEbook = () => {
         </div>
       </div>
     </section>
+    <SuccessPopup
+      open={showSuccess}
+      onClose={() => setShowSuccess(false)}
+      eyebrow="Download avviato"
+      title="Ottimo, è un buon primo passo."
+      description="Il tuo eBook “Trading senza illusioni” è pronto. Buona lettura: la consapevolezza viene prima di ogni scelta." 
+      buttonLabel="Inizia a leggere"
+    />
+    </>
   );
 };
 
