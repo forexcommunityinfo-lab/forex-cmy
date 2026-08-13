@@ -44,15 +44,40 @@ export const mockTestimonials = [
   }
 ];
 
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/info@forexcmy.com';
+
+const formSubjects = {
+  contact: '[Forex CMY] Nuovo messaggio dal portale',
+  recognition: '[Forex CMY] Nuova richiesta — Riconoscimento annuale',
+  ebook: '[Forex CMY] Nuovo download — eBook gratuito',
+  newsletter: '[Forex CMY] Nuova iscrizione — Newsletter',
+};
+
 const sendForm = async (payload) => {
-  const response = await fetch('/api/forms', {
+  const type = payload.type || 'contact';
+  const response = await fetch(FORMSUBMIT_ENDPOINT, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      ...payload,
+      categoria: type,
+      _subject: formSubjects[type] || formSubjects.contact,
+      _template: 'table',
+      _captcha: 'false',
+      _honey: payload.website || '',
+    }),
   });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(result.message || 'Invio non riuscito.');
-  return result;
+  return {
+    success: result.success !== false,
+    message: type === 'newsletter'
+      ? 'Iscrizione completata con successo.'
+      : 'Richiesta inviata con successo.',
+  };
 };
 
 export const subscribeNewsletter = (email, source = 'newsletter') =>
